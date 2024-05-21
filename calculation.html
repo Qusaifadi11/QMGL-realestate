@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Validation</title>
+<style>
+    .error {
+        color: red;
+    }
+    body {
+        text-align: center;
+        background-color: rgba(248, 245, 241, 0.763);
+    }
+</style>
+</head>
+<body>
+<p id="ghalia"></p>
+<script>
+    function calculate() {
+        // Get form input values
+        var username = document.getElementById('username').value;
+        var familymember = document.getElementById('familymember').value;
+        var gender = document.querySelector('input[name="gender"]:checked');
+        var meters = document.getElementById("meters").value;
+        var houseTypes = document.querySelectorAll('input[name="house"]:checked');
+        
+        // Validation
+        var usernameError = document.getElementById('usernameError');
+        var familymemberError = document.getElementById('familymemberError');
+        var genderError = document.getElementById('genderError');
+        var metersError = document.getElementById('metersError');
+        var houseError = document.getElementById('houseError');
+        var isValid = true;
+
+        usernameError.textContent = '';
+        familymemberError.textContent = '';
+        genderError.textContent = '';
+        metersError.textContent = '';
+        houseError.textContent = '';
+
+        if (username === '') {
+            usernameError.textContent = 'Please enter your username';
+            isValid = false;
+        }
+        if (familymember === '') {
+            familymemberError.textContent = 'Please enter your family member';
+            isValid = false;
+        }
+        if (!gender) {
+            genderError.textContent = 'Please select your gender';
+            isValid = false;
+        }
+        if (houseTypes.length === 0) {
+            houseError.textContent = 'Please select one type of house';
+            isValid = false;
+        }
+        if (!isValid) {
+            return; // Exit if form is invalid
+        }
+
+        // Calculate salary (dummy calculation for demonstration)
+        var salary = parseInt(meters) * 1000;
+
+        // Display result
+        var resultTextArea = document.getElementById('result');
+        resultTextArea.value = 'Name: ' + username + '\n';
+        resultTextArea.value += 'Family Member: ' + familymember + '\n';
+        resultTextArea.value += 'Gender: ' + gender.value + '\n';
+        resultTextArea.value += 'House Types: ';
+        houseTypes.forEach(function(houseType) {
+            resultTextArea.value += houseType.value + ', ';
+        });
+        resultTextArea.value = resultTextArea.value.slice(0, -2); // Remove last comma and space
+        resultTextArea.value += '\nSalary: $' + salary;
+    }
+
+    function findprice() {
+      var firstNumber = Number(prompt("Enter the price per meter:"));
+      var secondNumber = Number(prompt("Enter the number of meters:"));
+      var largerNumber ;
+      if(firstNumber>0)
+      prc = firstNumber*secondNumber+"$";
+      else
+      document.getElementById("meters").innerText = "Please enter a valid number.";
+      
+      document.getElementById("result").innerHTML= prc
+      resultElement.textContent = "The approximate price is"+ prc+"$";
+    }
+
+
+    function updateDateTime() {
+        var now = new Date();
+        var datetimeElement = document.getElementById("datetime");
+        var dateString = now.toDateString();
+        var timeString = now.toLocaleTimeString();
+        datetimeElement.textContent = "Date: " + dateString + " | Time: " + timeString;
+    }
+
+    window.onload = function() {
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    }
+</script>
+
+<a href="services.html"><img src="1.png" style="width: fit-content;"></a>
+<h1>Calculate Approximate Price</h1>
+<hr>
+<div>
+    <form>
+        <p id="datetime"></p><br>
+        <label>Your Name:</label>
+        <input type="text" id="username" name="username">
+        <span id="usernameError" class="error"></span>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required minlength="8">
+        <div class="invalid-feedback">
+        </div><br><br>
+        <label>Your Family Member:</label>
+        <input type="number" id="familymember" name="familymember">
+        <span id="familymemberError" class="error"></span><br><br>
+        
+        <label>Your Gender:</label>
+        <input type="radio" name="gender" value="Male">Male
+        <input type="radio" name="gender" value="Female">Female
+        <input type="radio" name="gender" value="Unknown">Unknown
+        <span id="genderError" class="error"></span><br><br>
+
+        <label>What type of house do you need:</label><br><br>
+        <input type="checkbox" name="house" value="forsale">For Sale 
+        <input type="checkbox" name="house" value="forrent">For Rent 
+        <span id="houseError" class="error"></span><br><br>
+
+        <label>Number of Meters:</label>
+        <input type="number" id="meters" name="meters">
+        <span id="metersError" class="error"></span><br><br>
+
+        <button type="button" onclick="findprice()">Calculate Approximate Price$$</button><br><br>
+        <textarea id="result" rows="7" cols="50"></textarea><br>
+        <input type="checkbox">I'm not a robot<br>
+        <button type="button" onclick="calculate()">Submit</button>
+    </form>
+</div>
+</body>
+</html>
